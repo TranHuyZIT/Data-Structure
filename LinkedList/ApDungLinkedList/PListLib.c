@@ -32,6 +32,7 @@ int member(ElementType x, List L);                    // Check if and element ex
 void append(ElementType x, List *pL);                 // Append a Node to the end of list;
 void addFirst(ElementType x, List *pL);               // Add a Node at the starting Position.
 List diffOfSets(List L1, List L2);                    // Return a List of differences between L1 and L2.
+List unionSet(List L1, List L2);                      // Return a list of union of the two set
 //
 
 // Functions
@@ -254,4 +255,21 @@ List diffOfSets(List L1, List L2)
     }
     return L;
 }
+List unionSet(List L1, List L2)
+{
+    List L;
+    makenullList(&L);
+    Position P = L1;
+    while (P->Next != NULL)
+    {
+        ElementType tmp = retrieve(P, L1);
+        if (member(tmp, L2))
+        {
+            append(tmp, &L);
+        }
+        P = Next(P);
+    }
+    return L;
+}
+
 //
