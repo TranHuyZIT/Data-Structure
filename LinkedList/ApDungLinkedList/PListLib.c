@@ -1,5 +1,16 @@
-#include "define.h"
+#include <stdio.h>
+#include <stdlib.h>
+// Definitons
+typedef int ElementType;
+struct Node
+{
+    ElementType Element;
+    struct Node *Next;
+};
+typedef struct Node *Position;
+typedef Position List;
 
+// LinkedList Functions:
 // Function Prototypes
 Position createNode(ElementType x);                   // Create a Node.
 void makenullList(List *pL);                          // Create an empty List.
@@ -20,6 +31,7 @@ void printList(List L);                               // Print The List on the s
 int member(ElementType x, List L);                    // Check if and element exist in the list.
 void append(ElementType x, List *pL);                 // Append a Node to the end of list;
 void addFirst(ElementType x, List *pL);               // Add a Node at the starting Position.
+List diffOfSets(List L1, List L2);                    // Return a List of differences between L1 and L2.
 //
 
 // Functions
@@ -49,7 +61,9 @@ void readList(List *pL)
         // For Every Loop, create a new node and added into List
         ElementType tmp;
         scanf("%d", &tmp);
-        append(tmp, pL);
+        N = createNode(tmp);
+        P->Next = N;
+        P = P->Next;
     }
 }
 
@@ -154,6 +168,7 @@ void printList(List L)
         printf("%d ", retrieve(P, L));
         P = Next(P);
     }
+    printf("\n");
 }
 
 int member(ElementType x, List L)
@@ -219,10 +234,24 @@ void normalize(List *pL)
 void removeAll(ElementType x, List *pL)
 {
     Position tmp = locate(x, *pL);
-    while (tmp != endList(*pL))
+    Position end = endList(*pL);
+    while (tmp != end)
     {
         deleteList(tmp, pL);
         tmp = locate(x, *pL);
     }
+}
+List diffOfSets(List L1, List L2)
+{
+    List L;
+    makenullList(&L);
+    Position P = L1;
+    while (P->Next != NULL)
+    {
+        if (!member(retrieve(P, L1), L) && !member(retrieve(P, L2), L2))
+            append(P->Next->Element, &L);
+        P = Next(P);
+    }
+    return L;
 }
 //
