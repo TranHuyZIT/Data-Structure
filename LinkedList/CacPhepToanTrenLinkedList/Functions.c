@@ -1,13 +1,11 @@
 #include "define.h"
 
-// LinkedList Functions:
-// Function Prototypes
+// ***** Function Prototypes
+
+// LinkedList:
 Position createNode(ElementType x);                   // Create a Node.
 void makenullList(List *pL);                          // Create an empty List.
 void readList(List *pL);                              // Read List from user input.
-List readSet();                                       // Read a set from user input
-List intersection(List L1, List L2);                  // Find the intersection between two list.
-void normalize(List *pL);                             // Normalize a list.
 int emptyList(List L);                                // Check if list is empty or not.
 ElementType retrieve(Position p, List L);             // Retrieve an element from a specfic position.
 void insertList(ElementType x, Position P, List *pL); // Insert a new Node next to P Node.
@@ -17,16 +15,22 @@ Position endList(List L);                             //Return last Position of 
 Position Next(Position P);                            // Return next position of P;
 Position Previous(Position P, List L);                // Return previous position of P;
 Position locate(ElementType x, List L);               // Locate the Position of ElementType x;
+void sortList(List *pL);                              // Sort the List
 void printList(List L);                               // Print The List on the screen.
 int member(ElementType x, List L);                    // Check if and element exist in the list.
 void append(ElementType x, List *pL);                 // Append a Node to the end of list;
 void addFirst(ElementType x, List *pL);               // Add a Node at the starting Position.
-List diffOfSets(List L1, List L2);                    // Return a List of differences between L1 and L2.
-List unionSet(List L1, List L2);                      // Return a list of union of the two set
-void sortList(List *pL);                              // Sort the List
-//
 
-// Functions
+// Set
+List diffOfSets(List L1, List L2);   // Return a List of differences between L1 and L2.
+List unionSet(List L1, List L2);     // Return a list of union of the two set
+List readSet();                      // Read a set from user input
+List intersection(List L1, List L2); // Find the intersection between two list.
+void normalize(List *pL);            // Normalize a list.
+// *********
+
+// ***** Functions:
+// LinkedList
 Position createNode(ElementType x)
 {
     Position p = (Position)malloc(sizeof(struct Node));
@@ -57,24 +61,6 @@ void readList(List *pL)
         P->Next = N;
         P = P->Next;
     }
-}
-
-List readSet()
-{
-    List L;
-    makenullList(&L);
-    int n;
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++)
-    {
-        ElementType tmp;
-        scanf("%d", &tmp);
-        if (!member(tmp, L))
-        {
-            addFirst(tmp, &L);
-        }
-    }
-    return L;
 }
 
 int emptyList(List L)
@@ -187,6 +173,59 @@ void addFirst(ElementType x, List *pL)
 {
     insertList(x, first(*pL), pL);
 }
+
+void removeAll(ElementType x, List *pL)
+{
+    Position tmp = locate(x, *pL);
+    Position end = endList(*pL);
+    while (tmp != end)
+    {
+        deleteList(tmp, pL);
+        tmp = locate(x, *pL);
+    }
+}
+
+void sortList(List *pL)
+{
+    Position P = first(*pL);
+    Position Q;
+    while (P->Next != NULL)
+    {
+        Q = P->Next;
+        while (Q->Next != NULL)
+        {
+            ElementType p = retrieve(P, *pL);
+            ElementType q = retrieve(Q, *pL);
+            if (q < p)
+            {
+                ElementType tmp = p;
+                P->Next->Element = q;
+                Q->Next->Element = tmp;
+            }
+            Q = Next(Q);
+        }
+        P = Next(P);
+    }
+}
+
+// Set
+List readSet()
+{
+    List L;
+    makenullList(&L);
+    int n;
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++)
+    {
+        ElementType tmp;
+        scanf("%d", &tmp);
+        if (!member(tmp, L))
+        {
+            addFirst(tmp, &L);
+        }
+    }
+    return L;
+}
 List intersection(List L1, List L2)
 {
     List L;
@@ -223,16 +262,6 @@ void normalize(List *pL)
         p = Next(p);
     }
 }
-void removeAll(ElementType x, List *pL)
-{
-    Position tmp = locate(x, *pL);
-    Position end = endList(*pL);
-    while (tmp != end)
-    {
-        deleteList(tmp, pL);
-        tmp = locate(x, *pL);
-    }
-}
 List diffOfSets(List L1, List L2)
 {
     List L;
@@ -262,27 +291,4 @@ List unionSet(List L1, List L2)
     }
     return L;
 }
-
-void sortList(List *pL)
-{
-    Position P = first(*pL);
-    Position Q;
-    while (P->Next != NULL)
-    {
-        Q = P->Next;
-        while (Q->Next != NULL)
-        {
-            ElementType p = retrieve(P, *pL);
-            ElementType q = retrieve(Q, *pL);
-            if (q < p)
-            {
-                ElementType tmp = p;
-                P->Next->Element = q;
-                Q->Next->Element = tmp;
-            }
-            Q = Next(Q);
-        }
-        P = Next(P);
-    }
-}
-//
+// ********
