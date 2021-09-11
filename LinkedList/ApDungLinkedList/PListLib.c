@@ -33,6 +33,7 @@ void append(ElementType x, List *pL);                 // Append a Node to the en
 void addFirst(ElementType x, List *pL);               // Add a Node at the starting Position.
 List diffOfSets(List L1, List L2);                    // Return a List of differences between L1 and L2.
 List unionSet(List L1, List L2);                      // Return a list of union of the two set
+void sortList(List *pL);                              // Sort the List
 //
 
 // Functions
@@ -272,4 +273,26 @@ List unionSet(List L1, List L2)
     return L;
 }
 
+void sortList(List *pL)
+{
+    Position P = first(*pL);
+    Position Q;
+    while (P->Next != NULL)
+    {
+        Q = P->Next;
+        while (Q->Next != NULL)
+        {
+            ElementType p = retrieve(P, *pL);
+            ElementType q = retrieve(Q, *pL);
+            if (q < p)
+            {
+                ElementType tmp = p;
+                P->Next->Element = q;
+                Q->Next->Element = tmp;
+            }
+            Q = Next(Q);
+        }
+        P = Next(P);
+    }
+}
 //
