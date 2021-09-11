@@ -23,6 +23,7 @@ void addFirst(ElementType x, List *pL);               // Add a Node at the start
 
 // Set
 List diffOfSets(List L1, List L2);   // Return a List of differences between L1 and L2.
+List sumSet(List L1, List L2);       // Return a list of sumset.
 List unionSet(List L1, List L2);     // Return a list of union of the two set
 List readSet();                      // Read a set from user input
 List intersection(List L1, List L2); // Find the intersection between two list.
@@ -288,6 +289,27 @@ List unionSet(List L1, List L2)
             append(tmp, &L);
         }
         P = Next(P);
+    }
+    return L;
+}
+List sumSet(List L1, List L2)
+{
+    List L;
+    makenullList(&L);
+    Position p = L1;
+    while (p->Next != NULL)
+    {
+        append(retrieve(p, L1), &L);
+        p = Next(p);
+    }
+    Position q = L2;
+    while (q->Next != NULL)
+    {
+        if (!member(retrieve(q, L2), L))
+        {
+            append(retrieve(q, L2), &L);
+        }
+        q = Next(q);
     }
     return L;
 }
