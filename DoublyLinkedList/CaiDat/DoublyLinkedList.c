@@ -1,4 +1,23 @@
 #include "define.h"
+
+// Prototypes
+Position createNode(ElementType data);
+pList createList();
+void addHead(pList l, int data);
+void addTail(pList l, int data);
+void addAt(pList l, int k, int x);
+void delHead(pList l);
+void delTail(pList l);
+void delAt(pList l, int k);
+Position Next(Position P);
+Position Previous(Position P);
+void printList(List L);
+pList readList();
+ElementType retrieve(Position p);
+Position locate(ElementType x, List L);
+// *******
+
+// Functions
 Position createNode(ElementType data)
 {
     Position p = (Position)malloc(sizeof(struct Node));
@@ -7,20 +26,22 @@ Position createNode(ElementType data)
     p->Pre = NULL;
     return p;
 }
-pList createList(int data)
+pList createList()
 {
     // Allocate new struct List and assign to pointer L.
-    pList L = (pList)malloc(sizeof(struct List));
-    L->Head = createNode(data);
+    pList L = (pList)malloc(sizeof(List));
+    L->Head = (Position)malloc(sizeof(struct Node));
+    L->Head->Next = NULL;
+    L->Head->Pre = NULL;
     L->Tail = L->Head;
     return L;
 }
 void addHead(pList l, int data)
 {
     Position tmp = createNode(data);
-    tmp->Next = l->Head;
+    tmp->Next = l->Head->Next;
     l->Head->Pre = tmp;
-    l->Head = tmp;
+    l->Head->Next = tmp;
 }
 void addTail(pList l, int data)
 {
@@ -40,7 +61,7 @@ void addAt(pList l, int k, int x)
     {
         Position p = l->Head;
         int i;
-        for (i = 0; i < k - 1; i++)
+        for (i = 0; i < k; i++)
         {
             p = p->Next;
         }
@@ -53,10 +74,10 @@ void addAt(pList l, int k, int x)
 }
 void delHead(pList l)
 {
-    Position p = l->Head->Next;
-    Position tmp = l->Head;
-    p->Pre = NULL;
-    l->Head = p;
+    Position p = l->Head->Next->Next;
+    Position tmp = l->Head->Next;
+    p->Pre = l->Head;
+    l->Head->Next = p;
     free(tmp);
 }
 void delTail(pList l)
@@ -71,7 +92,7 @@ void delAt(pList l, int k)
 {
     Position p = l->Head;
     int i;
-    for (i = 0; i < k - 1; i++)
+    for (i = 0; i < k; i++)
     {
         p = p->Next;
     }
@@ -81,38 +102,57 @@ void delAt(pList l, int k)
     p2->Pre = p;
     free(tmp);
 }
+Position Next(Position P)
+{
+    return P->Next;
+}
+Position Previous(Position P)
+{
+    return P->Pre;
+}
+void printList(List L)
+{
+    Position p = L.Head;
+    while (p->Next != NULL)
+    {
+        printf("%d ", p->Next->Element);
+        p = Next(p);
+    }
+    printf("\n");
+}
+pList readList()
+{
+    pList L = createList();
+    int n;
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++)
+    {
+        ElementType data;
+        scanf("%d", &data);
+        addTail(L, data);
+    }
+    return L;
+}
+ElementType retrieve(Position p)
+{
+    if (p->Next != NULL)
+    {
+        return p->Next->Element;
+    }
+    return INT_MAX;
+}
+Position locate(ElementType x, List L)
+{
+    Position P = L.Head;
+    while (P->Next != NULL)
+    {
+        if (P->Next->Element == x)
+        {
+            return P;
+        }
+        P = Next(P);
+    }
+    return P;
+}
 
-void printList(pList l)
-{
-    Position p = l->Head;
-    while (p != NULL)
-    {
-        printf("%d ", p->Element);
-        p = p->Next;
-    }
-}
-int main()
-{
-    int x, n, k, i;
-    scanf("%d%d", &n, &x);
-    pList l = createList(x);
-    for (i = 1; i < n; i++)
-    {
-        scanf("%d", &x);
-        addTail(l, x);
-    }
-    scanf("%d", &k);
-    if (k == 0)
-    {
-        delHead(l);
-    }
-    else if (k == n - 1)
-    {
-        delTail(l);
-    }
-    else
-    {
-        delAt(l, k);
-    }
-    printList(l);
-}
+// ******
