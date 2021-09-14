@@ -1,8 +1,8 @@
-# include <stdio.h>
-# include <math.h>
-# include <stdlib.h>
-# include <string.h>
-# include "PListLib.c"
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+#include <string.h>
+#include "PListLib.c"
 
 // khoi tao Stack bang LinkedList
 typedef List Stack;
@@ -18,26 +18,32 @@ void printStack(Stack S) 			// in cac p.tu trong Stack
 
 // function:
 
-void makenullStack(Stack *pS){
+void makenullStack(Stack *pS)
+{
 	makenullList(pS);
 }
 
-int emptyStack(Stack S){
+int emptyStack(Stack S)
+{
 	return emptyList(S);
 }
 
-ElementType top(Stack S){
+ElementType top(Stack S)
+{
 	retrieve(first(S),S);
 }
 
-void pop(Stack *pS){
+void pop(Stack *pS)
+{
 	deleteList(first(*pS), pS);
 }
 
-void push(Elementtype x, Stack *pS){
+void push(Elementtype x, Stack *pS)
+{
 	insertList(x, first(*pS), pS);
 }
 
-void printStack(Stack S){
+void printStack(Stack S)
+{
 	printList(S);
 }

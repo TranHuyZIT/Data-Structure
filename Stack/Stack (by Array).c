@@ -1,7 +1,7 @@
-# include <stdio.h>
-# include <math.h>
-# include <stdlib.h>
-# include <string.h>
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+#include <string.h>
 
 // khoi tao Stack
 #define MaxLength 100
@@ -28,19 +28,23 @@ void readStack(Stack *pS) 			// nhap Stack tu ban phim
 
 // functions:
 
-void makenullStack(Stack *pS){
+void makenullStack(Stack *pS)
+{
 	pS->Top_idx = MaxLength;
 }
 
-int emptyStack(Stack S){
+int emptyStack(Stack S)
+{
 	return S.Top_idx == MaxLength;
 }
 
-int full(Stack S){
+int full(Stack S)
+{
 	return S.Top_idx == 0;
 }
 
-ElementType top(Stack S){
+ElementType top(Stack S)
+{
 	// neu Stack rong -> loi
 	if (emptyStack(S)){
 		printf("Stack is empty\n");
@@ -50,7 +54,8 @@ ElementType top(Stack S){
 	}
 }
 
-void pop(Stack *pS){
+void pop(Stack *pS)
+{
 	// neu Stack rong -> loi
 	if (emptyStack(*pS)){
 		printf("Stack is empty\n");
@@ -60,7 +65,8 @@ void pop(Stack *pS){
 	}
 }
 
-void push(ElementType x, Stack *pS){
+void push(ElementType x, Stack *pS)
+{
 	// neu Stack day -> loi
 	if (full(*pS)){
 		printf("Stack is full\n");
@@ -71,7 +77,8 @@ void push(ElementType x, Stack *pS){
 	}
 }
 
-void printStack(Stack S){
+void printStack(Stack S)
+{
 	// neu Stack day -> loi
 	if (emptyStack(S)){
 		printf("Stack is empty\n");
@@ -84,7 +91,8 @@ void printStack(Stack S){
 	printf("\n");
 }
 
-void readStack(Stack *pS){
+void readStack(Stack *pS)
+{
 	makenullStack(pS);
 
 	int n;
