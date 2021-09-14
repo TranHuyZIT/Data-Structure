@@ -7,6 +7,8 @@
 // khoi tao Stack bang LinkedList
 typedef List Stack;
 
+// *******
+
 // prototypes:
 void makenullStack(Stack *pS) 		// khoi tao Stack rong
 int emptyStack(Stack S) 			// kiem tra Stack rong
@@ -15,6 +17,8 @@ ElementType top(Stack S) 			// tra ve p.tu o dinh Stack
 void pop(Stack *pS) 				// xoa p.tu tai dinh Stack
 void push(Elementtype x, Stack *pS) // them p.tu vao dinh Stack
 void printStack(Stack S) 			// in cac p.tu trong Stack
+
+// *******
 
 // function:
 

@@ -14,6 +14,8 @@ typedef struct{
 	int Top_idx;
 }Stack;
 
+// *******
+
 // prototypes:
 
 void makenullStack(Stack *pS) 		// khoi tao Stack rong
@@ -25,6 +27,7 @@ void push(ElementType x, Stack *pS) // them p.tu vao dinh Stack
 void printStack(Stack S) 			// in tat ca p.tu co trong Stack
 void readStack(Stack *pS) 			// nhap Stack tu ban phim
 
+// *******
 
 // functions:
 
