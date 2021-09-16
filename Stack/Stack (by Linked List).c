@@ -7,44 +7,47 @@
 // khoi tao Stack bang LinkedList
 typedef List Stack;
 
-// khoi tao Stack rong
+// *******
+
+// prototypes:
+void makenullStack(Stack *pS); 		// khoi tao Stack rong
+int emptyStack(Stack S);			// kiem tra Stack rong
+int emptyStack(Stack S);			// kiem tra Stack rong
+ElementType top(Stack S);			// tra ve p.tu o dinh Stack
+void pop(Stack *pS); 				// xoa p.tu tai dinh Stack
+void push(Elementtype x, Stack *pS); // them p.tu vao dinh Stack
+void printStack(Stack S); 			// in cac p.tu trong Stack
+
+// *******
+
+// function:
+
 void makenullStack(Stack *pS)
 {
 	makenullList(pS);
 }
 
-// kiem tra Stack rong
 int emptyStack(Stack S)
 {
 	return emptyList(S);
 }
 
-// tra ve p.tu o dinh Stack
 ElementType top(Stack S)
 {
-	retrieve(first(S), S);
+	retrieve(first(S),S);
 }
 
-// xoa p.tu tai dinh Stack
 void pop(Stack *pS)
 {
 	deleteList(first(*pS), pS);
 }
 
-// them p.tu vao dinh Stack
-void push(ElementType x, Stack *pS)
+void push(Elementtype x, Stack *pS)
 {
 	insertList(x, first(*pS), pS);
 }
 
-// in cac p.tu trong Stack
 void printStack(Stack S)
 {
 	printList(S);
-}
-
-// nhap Stack tu ban phim
-void readStack(Stack *pS)
-{
-	// tao chua lam ok ?
 }
