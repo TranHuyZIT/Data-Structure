@@ -47,6 +47,7 @@ void readList2D(List2D *pL)
         nR->Column = Col;
         nR->Next = NULL;
         R->Next = nR;
+        R = R->Next;
     }
 }
 void printList2D(List2D L)
