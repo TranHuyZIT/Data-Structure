@@ -26,6 +26,15 @@ void insert(ElementType x, Tree *pT); // Insert a Node.
 // ************
 
 // Functions:
+Tree createNode(ElementType x)
+{
+    Tree T = (Tree)malloc(sizeof(struct Node));
+    T->Data = x;
+    T->Left = NULL;
+    T->Right = NULL;
+    return T;
+}
+
 void makenullTree(Tree *pT)
 {
     *pT = NULL;
@@ -131,15 +140,6 @@ Tree search(ElementType x, Tree T)
     }
 }
 
-Tree createNode(ElementType x)
-{
-    Tree T = (Tree)malloc(sizeof(struct Node));
-    T->Data = x;
-    T->Left = NULL;
-    T->Right = NULL;
-    return T;
-}
-
 void insert(ElementType x, Tree *pT)
 {
     if ((*pT) == NULL)
@@ -157,4 +157,76 @@ void insert(ElementType x, Tree *pT)
             insert(x, &(*pT)->Right);
         }
     }
+}
+
+ElementType deleteMin(Tree *pT)
+{
+    if ((*pT)->Left == NULL)
+    {
+        // Now that (*pT) is the leftMost Node in tree.
+        ElementType k = (*pT)->Data;
+        (*pT) = (*pT)->Right;
+        return k;
+    }
+    else
+    {
+        return deleteMin(&(*pT)->Left);
+    }
+}
+
+void delete (ElementType x, Tree *pT)
+{
+    if ((*pT) != NULL)
+    {
+        if (x < (*pT)->Data)
+        {
+            delete (x, &(*pT)->Left);
+        }
+        else if (x > (*pT)->Data)
+        {
+            delete (x, &(*pT)->Right);
+        }
+        else
+        {
+            if (isLeaf((*pT)))
+            {
+                *pT = NULL;
+            }
+            else
+            {
+                if ((*pT)->Left == NULL)
+                {
+                    (*pT) = (*pT)->Right;
+                }
+                else
+                {
+                    if ((*pT)->Right == NULL)
+                    {
+                        (*pT) = (*pT)->Left;
+                    }
+                    else
+                    {
+                        (*pT)->Data = deleteMin(&(*pT)->Right);
+                    }
+                }
+            }
+        }
+    }
+}
+int main()
+{
+    Tree T = NULL;
+    Tree p;
+    int x;
+
+    insert(27, &T);
+    insert(12, &T);
+    insert(40, &T);
+    insert(4, &T);
+    insert(20, &T);
+    insert(34, &T);
+    insert(30, &T);
+    insert(50, &T);
+    delete (40, &T);
+    inOrder(T);
 }
