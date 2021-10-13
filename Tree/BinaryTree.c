@@ -2,31 +2,32 @@
 #include <stdlib.h>
 
 // Definitions
-typedef int ElementType;
+typedef int DataType;
 struct Node
 {
-    ElementType Data;
+    DataType Data;
     struct Node *Left, *Right;
 };
 typedef struct Node *Tree;
 
 // Functions Prototype
-Tree createNode(ElementType x);       // Create a Node.
-void makenullTree(Tree *pT);          // Init an empty Tree.
-int emptyTree(Tree T);                // Check whether Tree is empty.
-Tree leftChild(Tree N);               // Return Node's Left Child if any.
-Tree rightChild(Tree N);              // Return Node's Right Child if any.
-int isLeaf(Tree N);                   // Check if a Node is LeafNode.
-void preOrder(Tree T);                // PreOrder Tree Traversal (NLR).
-void inOrder(Tree T);                 // InOrder Tree Traversal (LNR).
-void posOrder(Tree T);                // PosOrder Tree Traversal (LRN).
-int countNodes(Tree T);               // Count number of Nodes in a Tree.
-Tree search(ElementType x, Tree T);   // Search a Node in a Tree.
-void insert(ElementType x, Tree *pT); // Insert a Node.
+Tree createNode(DataType x);       // Create a Node.
+void makenullTree(Tree *pT);       // Init an empty Tree.
+int emptyTree(Tree T);             // Check whether Tree is empty.
+Tree leftChild(Tree N);            // Return Node's Left Child if any.
+Tree rightChild(Tree N);           // Return Node's Right Child if any.
+int isLeaf(Tree N);                // Check if a Node is LeafNode.
+void preOrder(Tree T);             // PreOrder Tree Traversal (NLR).
+void inOrder(Tree T);              // InOrder Tree Traversal (LNR).
+void posOrder(Tree T);             // PosOrder Tree Traversal (LRN).
+int countNodes(Tree T);            // Count number of Nodes in a Tree.
+Tree search(DataType x, Tree T);   // Search a Node in a Tree.
+void insert(DataType x, Tree *pT); // Insert a Node.
+int countLeafNodes(Tree T);        // Count Leaf Nodes
 // ************
 
 // Functions:
-Tree createNode(ElementType x)
+Tree createNode(DataType x)
 {
     Tree T = (Tree)malloc(sizeof(struct Node));
     T->Data = x;
@@ -65,7 +66,7 @@ Tree rightChild(Tree N)
 
 int isLeaf(Tree N)
 {
-    if (N != NULL)
+    if (!emptyTree(N))
     {
         return (leftChild(N) != NULL && rightChild(N) != NULL);
     }
@@ -74,52 +75,59 @@ int isLeaf(Tree N)
 
 void preOrder(Tree T)
 {
-    printf("%d ", T->Data);
-    if (leftChild(T) != NULL)
-    {
-        preOrder(T->Left); // Travel all Left Nodes.
-    }
-    if (rightChild(T) != NULL)
-    {
-        preOrder(T->Right); // Travel all Right Nodes.
-    }
 }
 
 void inOrder(Tree T)
 {
-    if (leftChild(T) != NULL)
+    if (!emptyTree(T))
     {
-        inOrder(T->Left);
-    }
-    printf("%d ", T->Data);
-    if (rightChild(T) != NULL)
-    {
-        inOrder(T->Right);
+        inOrder(T->Left); // Travel all Left Nodes.
+        printf("%d ", T->Data);
+        inOrder(T->Right); // Travel all Right Nodes.
     }
 }
 
 void posOrder(Tree T)
 {
-    if (leftChild(T) != NULL)
+    if (!emptyTree(T))
     {
-        posOrder(T->Left);
+        posOrder(T->Left);  // Travel all Left Nodes.
+        posOrder(T->Right); // Travel all Right Nodes.
+        printf("%d ", T->Data);
     }
-    if (rightChild(T) != NULL)
-    {
-        posOrder(T->Right);
-    }
-    printf("%d ", T->Data);
 }
 
 int countNodes(Tree T)
 {
     if (T != NULL)
     {
-        return 1 + countNodes(leftChild(T)) + countNodes(rightChild(T));
+        return 1 + countNodes(leftChild(T)) +
+               countNodes(rightChild(T));
+    }
+    return 0;
+}
+
+int countLeafNodes(Tree T)
+{
+    if (T == NULL)
+        return 0;
+    else if (isLeaf(T))
+        return 1;
+    else
+    {
+        return countLeafNodes(leftChild(T)) + countLeafNodes(rightChild(T));
     }
 }
 
-Tree search(ElementType x, Tree T)
+Tree create2(DataType v, Tree l, Tree r)
+{
+    Tree N = createNode(v);
+    N->Left = l;
+    N->Right = r;
+    return N;
+}
+
+Tree search(DataType x, Tree T)
 {
     if (T == NULL)
     {
@@ -140,7 +148,7 @@ Tree search(ElementType x, Tree T)
     }
 }
 
-void insert(ElementType x, Tree *pT)
+void insert(DataType x, Tree *pT)
 {
     if ((*pT) == NULL)
     {
@@ -159,12 +167,12 @@ void insert(ElementType x, Tree *pT)
     }
 }
 
-ElementType deleteMin(Tree *pT)
+DataType deleteMin(Tree *pT)
 {
     if ((*pT)->Left == NULL)
     {
         // Now that (*pT) is the leftMost Node in tree.
-        ElementType k = (*pT)->Data;
+        DataType k = (*pT)->Data;
         (*pT) = (*pT)->Right;
         return k;
     }
@@ -174,7 +182,7 @@ ElementType deleteMin(Tree *pT)
     }
 }
 
-void delete (ElementType x, Tree *pT)
+void delete (DataType x, Tree *pT)
 {
     if ((*pT) != NULL)
     {
