@@ -24,6 +24,7 @@ int countNodes(Tree T);            // Count number of Nodes in a Tree.
 Tree search(DataType x, Tree T);   // Search a Node in a Tree.
 void insert(DataType x, Tree *pT); // Insert a Node.
 int countLeafNodes(Tree T);        // Count Leaf Nodes
+int getHeight(Tree T);             // Return Tree Height.
 // ************
 
 // Functions:
@@ -117,6 +118,17 @@ int countLeafNodes(Tree T)
     {
         return countLeafNodes(leftChild(T)) + countLeafNodes(rightChild(T));
     }
+}
+
+int max(int a, int b)
+{
+    return a > b ? a : b;
+}
+int getHeight(Tree T)
+{
+    if (T == NULL)
+        return -1;
+    return 1 + max(getHeight(T->Left), getHeight(T->Right));
 }
 
 Tree create2(DataType v, Tree l, Tree r)
