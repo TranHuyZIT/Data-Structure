@@ -1,6 +1,6 @@
 #include "BinaryTree.c"
 
-int max(int a, int b, int c)
+int max3(int a, int b, int c)
 {
     int tmp = a > b ? a : b;
     return tmp > c ? tmp : c;
@@ -11,6 +11,6 @@ int findMax(Tree T)
         return 0;
     else
     {
-        return max(findMax(T->Left), findMax(T->Right), T->Data);
+        return max3(findMax(T->Left), findMax(T->Right), T->Data);
     }
 }
