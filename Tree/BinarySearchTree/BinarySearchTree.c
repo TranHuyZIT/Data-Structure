@@ -154,11 +154,11 @@ Tree search(KeyType x, Tree T)
     }
     else if (T->Key < x)
     {
-        return search(x, leftChild(T));
+        return search(x, rightChild(T));
     }
     else
     {
-        return search(x, rightChild(T));
+        return search(x, leftChild(T));
     }
 }
 
